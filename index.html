@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+
+	<input type="text" placeholder="Исходное положение">
+	<button onclick="s()">Ok</button>
+
+	<script>
+		function s(){
+			//Устанавливаем размер поля
+			var axisY = ['A','B','C','D','E','F','G','H']
+			var axisX = 8
+
+			//Получаем позицию
+			let pos = document.getElementsByTagName('input')[0].value
+
+			//Определяем координаты позиции
+			var y = +axisY.indexOf(pos.slice(0,-1).toUpperCase()) + 1
+			var x = +pos.slice(1)
+
+
+			var steps = []
+			//Проверяем есть ли заданная позиция на поле
+			if(x <= axisX && x > 0 && y >= 0){
+				//Проверяем возможность хода конем из заданной позиции, сначала для оси X ,потом для Y
+				let stepX = valid([x,y], axisX, axisY.length)
+				let stepY = valid([y,x], axisX, axisY.length)
+
+				//Заполняем массив доступными ходами
+				for(let step of stepX){
+					steps.push(axisY[step[1]-1] + (step[0]))
+				}
+				for(let step of stepY){
+					steps.push(axisY[step[0]-1] + (step[1]))
+				}
+				alert(steps)
+			}else{
+				alert('Позиция не найдена')
+			}
+			
+			function valid(pos,axisOne,axisTwo){
+				let firstSteps = []
+				let steps = []
+
+				//Выбираем доступные направления для хода по первой оси(2 клетки)
+				if(pos[0]+2 <= axisOne && pos[0]+2 >0){
+					firstSteps.push(pos[0]+2)
+				}
+				if(pos[0]-2 <= axisOne && pos[0]-2 >0){
+					firstSteps.push(pos[0]-2)
+				}
+
+				//Выбираем доступные направления для хода по второй оси(1 клетка)
+				for(let i in firstSteps){
+					if(pos[1] + 1 <= axisTwo && pos[1] + 1 >0){
+						steps.push([firstSteps[i], pos[1] + 1])
+					}
+
+					if(pos[1] - 1 <= axisTwo && pos[1] - 1 >0){
+						steps.push([firstSteps[i], pos[1] - 1])
+					}
+
+				}
+				return steps
+			}
+		}
+
+
+	</script>
+</body>
+</html>
