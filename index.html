@@ -25,7 +25,7 @@
 
 			var steps = []
 			//Проверяем есть ли заданная позиция на поле
-			if(x <= axisX && x > 0 && y >= 0){
+			if(x <= axisX && x > 0 && y > 0){
 				//Проверяем возможность хода конем из заданной позиции, сначала для оси X ,потом для Y
 				let stepX = valid([x,y], axisX, axisY.length)
 				let stepY = valid([y,x], axisX, axisY.length)
